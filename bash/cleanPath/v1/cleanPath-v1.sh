@@ -12,7 +12,7 @@
 
 rm -rf /home/testUser/test/*
 if [ $? -eq 0 ]; then
-  logger "SUCCESS /var/crash folder has been cleaned up. aec"
+  logger "SUCCESS /var/crash folder has been cleaned up"
 else
-  logger "ERROR while deleting /var/crash folder. aec"
+  logger "ERROR while deleting /var/crash folder"
 fi
