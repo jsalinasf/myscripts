@@ -8,7 +8,7 @@
 # Version Specific Comments
 #
 # Trying some basic logging options
-# Right now the path is static; later on, it will be specified in a script variable
+# Right now the path to clean is static; later on, it will be specified in a script variable
 
 rm -rf /home/testUser/test/*
 if [ $? -eq 0 ]; then
