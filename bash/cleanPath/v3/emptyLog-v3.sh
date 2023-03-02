@@ -10,6 +10,7 @@
 # The email is sent using msmtp: https://wiki.debian.org/msmtp
 # The script stores the result of each file deletion effort on the BODY variable
 # The BODY variable is then passed to msmtp to send the email
+# NOW is being used to capture timestamps for each action
 
 RECEIVER="john@doe.com"
 SUBJECT="Server notifications"
