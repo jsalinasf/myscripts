@@ -31,7 +31,7 @@ for f in $(find /var/crash/* -type f -mmin +2)
     TOTALSIZE=$(( $TOTALSIZE + $SIZE ))
     rm $f
     if [ $? -eq 0 ]; then
-      logger "SUCCESS deleting file $f"      
+      logger "SUCCESS deleting file $f"
       LOGDATE=$(date +"%Y-%m-%d")
       LOGTIME=$(date +"%T")
       BODY+="$LOGDATE,$LOGTIME,Success,$f,$SIZE"$'\n'
