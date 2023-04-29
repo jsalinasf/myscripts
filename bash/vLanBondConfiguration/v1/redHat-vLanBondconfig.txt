@@ -37,4 +37,4 @@ nmcli connection add type vlan ifname bond0.10 con-name bond0.10 id 10 dev bond0
 nmcli connection modify bond0.10 ipv4.dns "8.8.8.8 1.1.1.1"
 
 # Finally run the next command to verify that your DNS are properly configured
-cat /etc/resolv.conf
+cat /etc/resolv.conf // dns servers list should appear here
