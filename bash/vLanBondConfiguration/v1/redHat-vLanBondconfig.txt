@@ -1,0 +1,40 @@
+# Configuration used on the DPA Bare-Metal
+
+# Before you start
+# Remove any existing connection profiles for the interfaces which will be used as the bond slaves
+# Note: This will permanently remove any connections for ens3 and ens4:
+
+
+# Just to make sure, you could run one part of the command to verify in the correct interfaces are being targeted
+
+for connection in $(nmcli -t --fields name,device connection | awk -F ":" '($2 ~ "ens{3,4}") {print $1}') ; do nmcli connection delete $connection ; done
+nmcli connection reload
+
+
+# Create a bond with no IP addressing assigned:
+# The trick for me was disabling ipv4 on the bond
+# Im using mode 802.3ad (Link Aggregation Protocolo - LACP). This mode requires that the network Switch has this feature
+# Ask your network team to configure that in advance
+
+nmcli connection add type bond ifname bond0 con-name bond0 mode 802.3ad miimon 100
+nmcli connection modify bond0 ipv4.method disabled ipv6.method ignore
+
+nmcli connection add type bond-slave ifname ens3 con-name ens3 master bond0
+nmcli connection add type bond-slave ifname ens4 con-name ens4 master bond0
+
+nmcli connection up bond0
+
+
+# Create a VLAN on top of bond0 with the IP addressing. The following assumes a VLAN ID of 10. Use either DHCP or set a static IP address:
+
+### Using DHCP for IP addressing:
+# nmcli connection add type vlan ifname bond0.10 con-name bond0.10 id 10 dev bond0
+
+### With a static IP of  10.20.30.10/24 and gateway of 10.20.30.1:
+nmcli connection add type vlan ifname bond0.10 con-name bond0.10 id 10 dev bond0 ip4 10.20.30.10/24 gw4 10.20.30.1
+
+# add DNS server
+nmcli connection modify bond0.10 ipv4.dns "8.8.8.8 1.1.1.1"
+
+# Finally run the next command to verify that your DNS are properly configured
+cat /etc/resolv.conf
