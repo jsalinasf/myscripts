@@ -11,5 +11,5 @@ set softtabstop=2
 set nowrap
 set autoindent
 set smartindent
-set backspace=eol, indent,start
+set backspace=eol,indent,start
 EOF
